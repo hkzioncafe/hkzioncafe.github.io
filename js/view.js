@@ -524,7 +524,7 @@ function createUserQrView() {
 
   var userinfo = getUserInfo();
   initViews();
-  if (userinfo.name == null){
+  if (userinfo.name == null || userinfo.email == null){
     setHeaderTitle('h2', 'Invalid User');
     return;
   }
@@ -533,7 +533,7 @@ function createUserQrView() {
 
   var div = createCustomElement('div', 'container col_11');
   content.appendChild(div);
-  div.id = 'mainPage';
+  div.id = 'userQrPage';
   // div.innerHTML = '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
 
   var html = '<div class="container col-11 mt-5"><ul class="list-group">';
@@ -554,7 +554,7 @@ function createUserQrView() {
   html += '<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-warning d-flex col flex-column align-items-center mt-5 mb-2" onclick="createScanView()" disabled>Scan</button></div>';
   div.innerHTML = html;
 
-  var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io");
+  var qrcode = new QRCode("qrcode",user.email);
 }
 
 function createMoreView() {
@@ -570,7 +570,7 @@ function createMoreView() {
 
   var div = createCustomElement('div', 'container col_11');
   content.appendChild(div);
-  div.id = 'mainPage';
+  div.id = 'morePage';
   // div.innerHTML = '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
 
   var html = '<div class="container col-11 mt-5">';
@@ -593,6 +593,60 @@ function createMoreView() {
   div.innerHTML = html;
 }
 
+function createTicketView() {
+
+  var userinfo = getUserInfo();
+  initViews();
+  if (userinfo.name == null){
+    setHeaderTitle('h2', 'Invalid User');
+    return;
+  }
+  header.innerHTML = getNavHtml();
+  footer.innerHTML = getFooterHtml();
+
+  var div = createCustomElement('div', 'container col_11');
+  content.appendChild(div);
+  div.id = 'ticketPage';
+  var html = '<div class="container col-11 mt-5"><ul class="list-group">';
+  html += '<li class="list-group-item d-flex justify-content-between align-items-center text-bg-warning">';
+  html += '<strong>咖啡餐飲券</strong>';
+  html += '</li>';
+  html += '<li class="list-group-item d-flex justify-content-between align-items-center ">';
+  html += '即將登場';
+  html += '</li>';
+  html += '</ul>';
+  html += '</div>';
+  div.innerHTML = html;
+
+}
+
+function createTxView() {
+
+  var userinfo = getUserInfo();
+  initViews();
+  if (userinfo.name == null){
+    setHeaderTitle('h2', 'Invalid User');
+    return;
+  }
+  header.innerHTML = getNavHtml();
+  footer.innerHTML = getFooterHtml();
+
+  var div = createCustomElement('div', 'container col_11');
+  content.appendChild(div);
+  div.id = 'txPage';
+  var html = '<div class="container col-11 mt-5"><ul class="list-group">';
+  html += '<li class="list-group-item d-flex justify-content-between align-items-center text-bg-warning">';
+  html += '<strong>交易記錄</strong>';
+  html += '</li>';
+  html += '<li class="list-group-item d-flex justify-content-between align-items-center ">';
+  html += '即將登場';
+  html += '</li>';
+  html += '</ul>';
+  html += '</div>';
+  div.innerHTML = html;
+
+}
+
 function createMainView() {
 
   var userinfo = getUserInfo();
@@ -607,24 +661,16 @@ function createMainView() {
   var div = createCustomElement('div', 'container col_11');
   content.appendChild(div);
   div.id = 'mainPage';
-  // div.innerHTML = '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
-
   var html = '<div class="container col-11 mt-5"><ul class="list-group">';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center text-bg-warning">';
   html += '<strong>公吿</strong>';
   html += '</li>';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center ">';
-  html += '未有公吿';
+  html += '即將登場';
   html += '</li>';
-  // html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
-  // html += '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
-  // html += '</li>';
   html += '</ul>';
   html += '</div>';
-  // html += '<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-primary d-flex col flex-column align-items-center mt-5 mb-2" onclick="createScanView()">Scan</button></div>';
   div.innerHTML = html;
-
-  // var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io");
 
 }
 
