@@ -554,7 +554,7 @@ function createUserQrView() {
   html += '<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-warning d-flex col flex-column align-items-center mt-5 mb-2" onclick="createScanView()" disabled>Scan</button></div>';
   div.innerHTML = html;
 
-  var qrcode = new QRCode("qrcode",user.email);
+  var qrcode = new QRCode("qrcode",window.btoa(userinfo.email));
 }
 
 function createMoreView() {
