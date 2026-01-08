@@ -89,12 +89,10 @@ function oauth2SignIn() {
   }
   // Add form to page and submit it to open the OAuth 2.0 endpoint.
   document.body.appendChild(form);
-  // form.submit(); // dev
-  createMainView() //dev
+  form.submit();
 }
 
 function getUserInfo() {
-  /* dev
   var data = localStorage.getItem('userinfo');
   if (data == null) {
     return null;
@@ -102,7 +100,5 @@ function getUserInfo() {
     var userinfo = JSON.parse(data);
     return userinfo;    
   }
-  */
-  return {'name':'envose-dev'};
 
 }
