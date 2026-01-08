@@ -427,8 +427,8 @@ function getFooterHtml() {
   html += '    <div class="container navbar-brand col-12">';
   html += '    <div class="row">';
   html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button"><i class="fa fa-home" style="font-size:36px;" onclick="return createMainView();"></i></button></div>';
-  html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button"><i class="fa fa-calendar" style="font-size:28px;"></i></button></div>';
-  html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button"><i class="fa fa-ticket" style="font-size:32px;"></i></button></div>';
+  html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button"><i class="fa fa-ticket" style="font-size:32px;" disabled></i></button></div>';
+  html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button"><i class="fa fa-calendar" style="font-size:28px;" disabled></i></button></div>';
   html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button" onclick="return createMoreView();"><i class="fa fa-ellipsis-h" style="font-size:32px;"></i></button></div>';
   html += '    </div>';
   html += '    </div>';
@@ -522,12 +522,12 @@ function genTodayAttendTable(res) {
 
 function createUserQrView() {
 
-  // var userinfo = getUserInfo();
+  var userinfo = getUserInfo();
   initViews();
-  // if (userinfo.name == null){
-  //   setHeaderTitle('h2', 'Invalid User');
-  //   return;
-  // }
+  if (userinfo.name == null){
+    setHeaderTitle('h2', 'Invalid User');
+    return;
+  }
   header.innerHTML = getNavHtml();
   footer.innerHTML = getFooterHtml();
 
@@ -536,9 +536,9 @@ function createUserQrView() {
   div.id = 'mainPage';
   // div.innerHTML = '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
 
-  var html = '<div class="container col-11 mt-3"><ul class="list-group">';
+  var html = '<div class="container col-11 mt-5"><ul class="list-group">';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center text-bg-warning">';
-  html += '<div class="d-flex col flex-column align-items-center"><strong>Envose</strong></div>';
+  html += '<div class="d-flex col flex-column align-items-center"><strong>'+userinfo.name+'</strong></div>';
   html += '</li>';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
   html += '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><div id="qrcode"></div></div>';
@@ -551,7 +551,7 @@ function createUserQrView() {
   // html += '</li>';
   html += '</ul>';
   html += '</div>';
-  html += '<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-warning d-flex col flex-column align-items-center mt-5 mb-2" onclick="createScanView()">Scan</button></div>';
+  html += '<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-warning d-flex col flex-column align-items-center mt-5 mb-2" onclick="createScanView()" disabled>Scan</button></div>';
   div.innerHTML = html;
 
   var qrcode = new QRCode("qrcode","https://visitorbookhk.github.io");
@@ -573,7 +573,7 @@ function createMoreView() {
   div.id = 'mainPage';
   // div.innerHTML = '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
 
-  var html = '<div class="container col-11 mt-3">';
+  var html = '<div class="container col-11 mt-5">';
   html += '<div class="d-flex col flex-column align-items-center">';
   html += '<button type="button" class="btn btn-danger col-6" onclick="return logout();">登出</button>';
   html += '</div>';
@@ -609,7 +609,7 @@ function createMainView() {
   div.id = 'mainPage';
   // div.innerHTML = '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
 
-  var html = '<div class="container col-11 mt-3"><ul class="list-group">';
+  var html = '<div class="container col-11 mt-5"><ul class="list-group">';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center text-bg-warning">';
   html += '<strong>公吿</strong>';
   html += '</li>';

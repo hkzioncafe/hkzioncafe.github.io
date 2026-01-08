@@ -43,7 +43,7 @@ function createCustomElement(ele, cssClassKey='') {
 
 function logout() {
   localStorage.clear();
-  window.location.replace('https://visitorbookhk.github.io/register');
+  window.location.replace(YOUR_REDIRECT_URI);
 }
 
 // Function to generate a random state value
