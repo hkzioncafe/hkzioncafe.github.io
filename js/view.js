@@ -427,8 +427,13 @@ function getFooterHtml() {
   html += '    <div class="container navbar-brand col-12">';
   html += '    <div class="row">';
   html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button"><i class="fa fa-home" style="font-size:36px;" onclick="return createMainView();"></i></button></div>';
-  html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button"><i class="fa fa-ticket" style="font-size:32px;" disabled></i></button></div>';
-  html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button"><i class="fa fa-calendar" style="font-size:28px;" disabled></i></button></div>';
+  html += '      <div class="col text-center"><button class="btn btn-light text-warning  position-relative" type="button" onclick="return createCouponView();"><i class="fa fa-ticket" style="font-size:32px;"></i>';
+  html += '  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">';
+  html += '    99';
+  html += '    <span class="visually-hidden">unread messages</span>';
+  html += '  </span>';
+  html += '</button></div>';
+  html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button" onclick="return createTxView();"><i class="fa fa-calendar" style="font-size:28px;"></i></button></div>';
   html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button" onclick="return createMoreView();"><i class="fa fa-ellipsis-h" style="font-size:32px;"></i></button></div>';
   html += '    </div>';
   html += '    </div>';
@@ -575,7 +580,7 @@ function createMoreView() {
 
   var html = '<div class="container col-11 mt-5">';
   html += '<div class="d-flex col flex-column align-items-center">';
-  html += '<button type="button" class="btn btn-danger col-6" onclick="return logout();">登出</button>';
+  html += '<button type="button" class="btn btn-danger col-12 col-lg-4" onclick="return logout();">登出</button>';
   html += '</div>';
   // html += '<div class="d-flex col flex-column align-items-center"><strong>Envose</strong></div>';
   // html += '</li>';
@@ -593,7 +598,21 @@ function createMoreView() {
   div.innerHTML = html;
 }
 
-function createTicketView() {
+function createUseCouponView() {
+  var body = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><div id="qrcode_usecoupon"></div></div>';
+  var footer = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><button type="button" class="btn btn-warning" disabled>手機落單</button></div>';
+  showInputModal('使用咖啡餐飲券',body,footer);
+
+  var qrcode = new QRCode("qrcode_usecoupon",window.btoa('Use Coupon'));
+}
+
+function createGiftAwayView() {
+  var body = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><div id="qrcode_giftaway"></div></div>';
+  showInputModal('贈送咖啡餐飲券',body,'');
+  var qrcode = new QRCode("qrcode_giftaway",window.btoa('Gift Away'));
+}
+
+function createCouponView() {
 
   var userinfo = getUserInfo();
   initViews();
@@ -609,10 +628,23 @@ function createTicketView() {
   div.id = 'ticketPage';
   var html = '<div class="container col-11 mt-5"><ul class="list-group">';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center text-bg-warning">';
-  html += '<strong>咖啡餐飲券</strong>';
+  html += '<strong>咖啡餐飲券</strong><span class="badge rounded-pill bg-danger">99</span>';
   html += '</li>';
   html += '<li class="list-group-item d-flex justify-content-between align-items-center ">';
-  html += '即將登場';
+  html += '<div class="card text-white" onclick="return createUseCouponView();" >';
+  html += '  <img src="img/bg_coffee_6.jpeg" class="card-img" style="max-width:400px;">';
+  html += '  <div class="card-img-overlay">';
+  html += '    <h5 class="card-title">使用咖啡餐飲券</h5>';
+  html += '  </div>';
+  html += '</div>';
+  html += '</li>';
+  html += '<li class="list-group-item d-flex justify-content-between align-items-center ">';
+  html += '<div class="card text-white" onclick="return createGiftAwayView();">';
+  html += '  <img src="img/bg_coffee_7.jpeg" class="card-img" style="max-width:400px;">';
+  html += '  <div class="card-img-overlay">';
+  html += '    <h5 class="card-title">贈送咖啡餐飲券</h5>';
+  html += '  </div>';
+  html += '</div>';
   html += '</li>';
   html += '</ul>';
   html += '</div>';
