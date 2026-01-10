@@ -617,6 +617,7 @@ function createMoreView() {
 }
 
 function createUseCouponView() {
+  var userinfo = getUserInfo();
   var body = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><div id="qrcode_usecoupon"></div></div>';
   var footer = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><button type="button" class="btn btn-warning" disabled>手機落單</button></div>';
   showInputModal('現場下單',body,footer);
