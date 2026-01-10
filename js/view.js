@@ -624,9 +624,8 @@ function createUseCouponView() {
   var qrcode = new QRCode("qrcode_usecoupon",window.btoa('act=use&c='+userinfo.email));
 }
 
-function createGiftQRview() {
+function createGiftQRview(code) {
   var userinfo = getUserInfo();
-  var qty = document.getElementById('gift_qty').value;
   confirmModal.hide();
   var body =  '<div class="card text-white">';
   body += '  <img src="img/bg_coffee_7.jpeg" class="card-img">';
@@ -637,13 +636,13 @@ function createGiftQRview() {
   body += '  </div>';
   body += '</div>';
   showAlertModal('贈送咖啡餐飲券',body,'');
-  var qrcode = new QRCode("qrcode_giftaway", {"text": window.btoa('Gift Away'), "width":100, "height":100});
+  var qrcode = new QRCode("qrcode_giftaway", {"text": window.btoa(code), "width":100, "height":100});
 }
 
 function createGiftView() {
   // var body = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><div id="qrcode_giftaway"></div></div>';
   var body = createFormInputNumber('gift_qty', '數量', '', 1, true);
-  var footer = '<button type="button" class="btn btn-danger disabled" onclick="return createGiftQRview();">確定</button>';
+  var footer = '<button type="button" class="btn btn-danger" onclick="return gasGetGiiftCode();">確定</button>';
   showInputModal('贈送咖啡餐飲券',body,footer);
   // var qrcode = new QRCode("qrcode_giftaway",window.btoa('Gift Away'));
 }

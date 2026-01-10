@@ -110,6 +110,26 @@ function gasUseCoupon(customer) {
   });
 }
 
+function gasGetGiiftCode() {
+  var qty = document.getElementById('gift_qty').value;
+  var content = window.btoa(unescape(encodeURIComponent(qty)));
+  on();
+  inputModal.hide();
+  var userinfo = getUserInfo();
+  var url = GAS_URL+'?action=getGiftCode&content='+content+'&id='+userinfo.id;
+  $.getJSON(url, function(data) {
+    if (data !== null) {
+      if (data.status=='0') {
+        createGiftQRview(data.res);
+        // createAccessView(data.res);
+      }else{
+        createRegErrorView(data.error_msg);
+      }
+    }
+    off();
+  });
+}
+
 function getUserInfo() {
   
   var data = localStorage.getItem('userinfo');
