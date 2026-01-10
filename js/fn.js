@@ -92,7 +92,26 @@ function oauth2SignIn() {
   form.submit();
 }
 
+function gasUseCoupon(customer) {
+  var content = window.btoa(unescape(encodeURIComponent(lifeno)));
+  on();
+  inputModal.hide();
+  var userinfo = getUserInfo();
+  var url = GAS_URL+'?action=useCoupon&content='+content+'&id='+userinfo.id;
+  $.getJSON(url, function(data) {
+    if (data !== null) {
+      if (data.status=='0') {
+        createAccessView(data.res);
+      }else{
+        createRegErrorView(data.error_msg);
+      }
+    }
+    off();
+  });
+}
+
 function getUserInfo() {
+  
   var data = localStorage.getItem('userinfo');
   if (data == null) {
     return null;

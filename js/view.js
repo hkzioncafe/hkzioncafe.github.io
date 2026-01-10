@@ -116,6 +116,35 @@ function createFormInputSelect(_key, _options, _values, multi_input, _mandatory)
   return temp.innerHTML;
 }
 
+function createFormInputNumber(_key, _label, _placeholder, _defaultvalue, _mandatory) {
+
+  var input_id = _key;
+
+  var temp = createCustomElement('div');
+
+  var div = createCustomElement('div', 'input-group mb-3');
+
+  var span = createCustomElement('span', 'input-group-text');
+  div.appendChild(span);
+  span.innerHTML = _label;
+  span.id = 'label_'+input_id;
+
+  var input = createCustomElement('input', 'form-control');
+  div.appendChild(input);
+  input.id=input_id;
+  input.setAttribute('type', 'number');
+  input.setAttribute('value', _defaultvalue);
+  input.setAttribute('placeholder', _placeholder);
+  input.setAttribute('aria-label', _placeholder);
+  input.setAttribute('aria-describedby', input_id);
+  if (_mandatory) {
+    input.setAttribute('required','true');
+  }
+
+  temp.appendChild(div);
+  return temp.innerHTML;
+}
+
 function createFormInputText(_key, _label, _placeholder, _mandatory) {
 
   var input_id = _key;
@@ -421,6 +450,7 @@ function getNavHtml() {
 }
 
 function getFooterHtml() {
+  var userinfo = getUserInfo();
   var html = '';
   html += '<nav class="navbar navbar-expand-lg bg-body-tertiary">';
   html += '  <div class="container-fluid mx-4 my-1">';
@@ -429,7 +459,7 @@ function getFooterHtml() {
   html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button"><i class="fa fa-home" style="font-size:36px;" onclick="return createMainView();"></i></button></div>';
   html += '      <div class="col text-center"><button class="btn btn-light text-warning  position-relative" type="button" onclick="return createCouponView();"><i class="fa fa-ticket" style="font-size:32px;"></i>';
   html += '  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">';
-  html += '    99';
+  html += userinfo.stock;
   html += '    <span class="visually-hidden">unread messages</span>';
   html += '  </span>';
   html += '</button></div>';
@@ -582,18 +612,6 @@ function createMoreView() {
   html += '<div class="d-flex col flex-column align-items-center">';
   html += '<button type="button" class="btn btn-danger col-12 col-lg-4" onclick="return logout();">登出</button>';
   html += '</div>';
-  // html += '<div class="d-flex col flex-column align-items-center"><strong>Envose</strong></div>';
-  // html += '</li>';
-  // html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
-  // html += '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><div id="qrcode"></div></div>';
-  // html += '</li>';
-  // html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
-  // html += '未有公吿';
-  // html += '</li>';
-  // html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
-  // html += '<div class="d-flex col flex-column align-items-center mt-5 mb-5"><div id="qrcode"></div></div>';
-  // html += '</li>';
-  // html += '</ul>';
   html += '</div>';
   div.innerHTML = html;
 }
@@ -601,15 +619,32 @@ function createMoreView() {
 function createUseCouponView() {
   var body = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><div id="qrcode_usecoupon"></div></div>';
   var footer = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><button type="button" class="btn btn-warning" disabled>手機落單</button></div>';
-  showInputModal('使用咖啡餐飲券',body,footer);
-
-  var qrcode = new QRCode("qrcode_usecoupon",window.btoa('Use Coupon'));
+  showInputModal('現場下單',body,footer);
+  var qrcode = new QRCode("qrcode_usecoupon",window.btoa('act=use&c='+userinfo.email));
 }
 
-function createGiftAwayView() {
-  var body = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><div id="qrcode_giftaway"></div></div>';
-  showInputModal('贈送咖啡餐飲券',body,'');
-  var qrcode = new QRCode("qrcode_giftaway",window.btoa('Gift Away'));
+function createGiftQRview() {
+  var userinfo = getUserInfo();
+  var qty = document.getElementById('gift_qty').value;
+  confirmModal.hide();
+  var body =  '<div class="card text-white">';
+  body += '  <img src="img/bg_coffee_7.jpeg" class="card-img">';
+  body += '  <div class="card-img-overlay">';
+  body += '    <h5 class="card-title">'+userinfo.name+'</h5>';
+  body += '    <h5 class="card-title">送您 '+qty+' 個咖啡餐飲券</h5>';
+  body += '<div class="d-flex col flex-column align-items-center"><div id="qrcode_giftaway" ></div></div>';
+  body += '  </div>';
+  body += '</div>';
+  showAlertModal('贈送咖啡餐飲券',body,'');
+  var qrcode = new QRCode("qrcode_giftaway", {"text": window.btoa('Gift Away'), "width":100, "height":100});
+}
+
+function createGiftView() {
+  // var body = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><div id="qrcode_giftaway"></div></div>';
+  var body = createFormInputNumber('gift_qty', '數量', '', 1, true);
+  var footer = '<button type="button" class="btn btn-danger disabled" onclick="return createGiftQRview();">確定</button>';
+  showInputModal('贈送咖啡餐飲券',body,footer);
+  // var qrcode = new QRCode("qrcode_giftaway",window.btoa('Gift Away'));
 }
 
 function createCouponView() {
@@ -639,7 +674,7 @@ function createCouponView() {
   html += '</div>';
   html += '</div>';
   html += '<div class="d-flex col flex-column align-items-center mt-3 mb-3">';
-  html += '<div class="card text-white" onclick="return createGiftAwayView();">';
+  html += '<div class="card text-white" onclick="return createGiftView();">';
   html += '  <img src="img/bg_coffee_7.jpeg" class="card-img" style="max-width:400px;">';
   html += '  <div class="card-img-overlay">';
   html += '    <h4 class="card-title">贈送咖啡餐飲券</h4>';
