@@ -626,7 +626,7 @@ function createUseCouponView() {
 
 function createGiftQRview(code) {
   var userinfo = getUserInfo();
-  confirmModal.hide();
+  inputModal.hide();
   var body =  '<div class="card text-white">';
   body += '  <img src="img/bg_coffee_7.jpeg" class="card-img">';
   body += '  <div class="card-img-overlay">';
