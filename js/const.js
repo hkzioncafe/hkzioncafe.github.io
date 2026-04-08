@@ -1,4 +1,4 @@
-const GAS_URL = 'https://script.google.com/macros/s/AKfycby9lkh_dJpdAG6OwRoHIhM0Vga29J4UbHGTIoldKeHf5xiU2vhMImwvrJQt40up7lui/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbx6txuNexfo3pvUF6MkVO1_IkXLs6ZpsaKMmXczezK0x6GRBiEehwBuSMZYC68yeiEB/exec';
 const YOUR_CLIENT_ID = '416770209134-tjtguj3gstg24fvvrtrj890p533bsuim.apps.googleusercontent.com';
 const YOUR_REDIRECT_URI = 'https://hkzioncafe.github.io';
 const lang_op = {

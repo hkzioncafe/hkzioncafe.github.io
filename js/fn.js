@@ -92,12 +92,13 @@ function oauth2SignIn() {
   form.submit();
 }
 
-function gasUseCoupon(customer) {
-  var content = window.btoa(unescape(encodeURIComponent(lifeno)));
+function gasUseVoucher() {
+  var customer = 'envose.au@gmail.com';
+  var content = window.btoa(unescape(encodeURIComponent(customer)));
   on();
   inputModal.hide();
   var userinfo = getUserInfo();
-  var url = GAS_URL+'?action=useCoupon&content='+content+'&id='+userinfo.id;
+  var url = GAS_URL+'?action=useVoucher&content='+content+'&id='+userinfo.id;
   $.getJSON(url, function(data) {
     if (data !== null) {
       if (data.status=='0') {
@@ -119,6 +120,7 @@ function gasGetGiiftCode() {
   var url = GAS_URL+'?action=getGiftCode&content='+content+'&id='+userinfo.id;
   $.getJSON(url, function(data) {
     if (data !== null) {
+      console.log(JSON.stringify(data));
       if (data.status=='0') {
         createGiftQRview(data.res);
         // createAccessView(data.res);

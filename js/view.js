@@ -382,8 +382,8 @@ function createRegErrorView(err_msg) {
 function createAccessView(res) {
   console.log(JSON.stringify(res))
   var contentHTML = '';
-  contentHTML += '<div class="text-center"><img class="mt-3 mb-3" src="img/tick_'+res.type+'.gif" class="d-block w-70" alt="">';
-  contentHTML += '<h3><span class="badge rounded-pill text-bg-'+((res.type=='sys')?'success':'danger')+'">'+res.name+'</span></h3></div>';
+  contentHTML += '<div class="text-center"><img class="mt-3 mb-3" src="img/'+(res)?'tick_sys':'error'+'.gif" class="d-block w-70" alt="">';
+  // contentHTML += '<h3><span class="badge rounded-pill text-bg-'+((res.type=='sys')?'success':'danger')+'">'+res.name+'</span></h3></div>';
   showAlertModal('成功', contentHTML, '');
 }
 
@@ -457,7 +457,7 @@ function getFooterHtml() {
   html += '    <div class="container navbar-brand col-12">';
   html += '    <div class="row">';
   html += '      <div class="col text-center"><button class="btn btn-light text-warning" type="button"><i class="fa fa-home" style="font-size:36px;" onclick="return createMainView();"></i></button></div>';
-  html += '      <div class="col text-center"><button class="btn btn-light text-warning  position-relative" type="button" onclick="return createCouponView();"><i class="fa fa-ticket" style="font-size:32px;"></i>';
+  html += '      <div class="col text-center"><button class="btn btn-light text-warning  position-relative" type="button" onclick="return createVoucherView();"><i class="fa fa-ticket" style="font-size:32px;"></i>';
   html += '  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">';
   html += userinfo.stock;
   html += '    <span class="visually-hidden">unread messages</span>';
@@ -586,10 +586,12 @@ function createUserQrView() {
   // html += '</li>';
   html += '</ul>';
   html += '</div>';
-  html += '<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-warning d-flex col flex-column align-items-center mt-5 mb-2" onclick="createScanView()" disabled>Scan</button></div>';
+  // html += userinfo.isStaff?'<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-warning d-flex col flex-column align-items-center mt-5 mb-2" onclick="createScanView()">Scan</button></div>':'';
+  html += userinfo.isStaff?'<div class="d-flex col flex-column align-items-center mt-2"><button type="button" class="btn btn-warning d-flex col flex-column align-items-center mt-5 mb-2" onclick="gasUseVoucher()">Scan</button></div>':'';
+
   div.innerHTML = html;
 
-  var qrcode = new QRCode("qrcode",window.btoa(userinfo.email));
+  var qrcode = new QRCode("qrcode",window.btoa('act=user&c='+userinfo.email));
 }
 
 function createMoreView() {
@@ -616,12 +618,12 @@ function createMoreView() {
   div.innerHTML = html;
 }
 
-function createUseCouponView() {
+function createUseVoucherView() {
   var userinfo = getUserInfo();
-  var body = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><div id="qrcode_usecoupon"></div></div>';
+  var body = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><div id="qrcode_useVoucher"></div></div>';
   var footer = '<div class="d-flex col flex-column align-items-center mt-3 mb-3"><button type="button" class="btn btn-warning" disabled>手機落單</button></div>';
   showInputModal('現場下單',body,footer);
-  var qrcode = new QRCode("qrcode_usecoupon",window.btoa('act=use&c='+userinfo.email));
+  var qrcode = new QRCode("qrcode_useVoucher",window.btoa('act=deduct&c='+userinfo.email));
 }
 
 function createGiftQRview(code) {
@@ -647,7 +649,7 @@ function createGiftView() {
   // var qrcode = new QRCode("qrcode_giftaway",window.btoa('Gift Away'));
 }
 
-function createCouponView() {
+function createVoucherView() {
 
   var userinfo = getUserInfo();
   initViews();
@@ -666,21 +668,23 @@ function createCouponView() {
   // html += '<strong>咖啡餐飲券</strong><span class="badge rounded-pill bg-danger">99</span>';
   // html += '</li>';
   html += '<div class="d-flex col flex-column align-items-center mt-3 mb-3">';
-  html += '<div class="card text-white" onclick="return createUseCouponView();" >';
+  html += '<div class="card text-white" onclick="return createUseVoucherView();" >';
   html += '  <img src="img/bg_coffee_6.jpeg" class="card-img" style="max-width:400px;">';
   html += '  <div class="card-img-overlay">';
   html += '    <h4 class="card-title">使用咖啡餐飲券</h4>';
   html += '  </div>';
   html += '</div>';
   html += '</div>';
+  /*
   html += '<div class="d-flex col flex-column align-items-center mt-3 mb-3">';
-  html += '<div class="card text-white" onclick="return createGiftView();">';
+  html += '<div class="card text-white disabled" onclick="return createGiftView();">';
   html += '  <img src="img/bg_coffee_7.jpeg" class="card-img" style="max-width:400px;">';
   html += '  <div class="card-img-overlay">';
   html += '    <h4 class="card-title">贈送咖啡餐飲券</h4>';
   html += '  </div>';
   html += '</div>';
   html += '</div>';
+  */
   html += '</div>';
   div.innerHTML = html;
 
