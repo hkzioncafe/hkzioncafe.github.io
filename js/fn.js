@@ -75,7 +75,7 @@ function oauth2SignIn() {
   // Parameters to pass to OAuth 2.0 endpoint.
   var params = {'client_id': YOUR_CLIENT_ID,
                 'redirect_uri': YOUR_REDIRECT_URI,
-                'scope': 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.locale',
+                'scope': 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.language',
                 'state': state,
                 'include_granted_scopes': 'true',
                 'response_type': 'token'};
